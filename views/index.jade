@@ -1,21 +1,55 @@
 extends layout
 
 block content
-  |<script src=//fb.me/react-0.11.1.min.js></script>
+  |<script src=//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js></script>
+  |<script src=//fb.me/react-0.11.1.js></script>
   |<script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
   |<script type="text/jsx" src=/javascripts/index.js></script>
 
   |<script type="text/jsx">
   |/** @jsx React.DOM */
   | setTimeout(function() { 
-  |  alert('resndered') 
   |  React.renderComponent(
   |    <TodoApp items={"#{props.items.toString()},Test 3".split(',')} />,
   |    document.getElementById('example')
   |  );
+  |  var id = $("#example div:first").attr('data-reactid');
+  |  $(".same span.after").text(id);
+
+  |  React.renderComponent(
+  |    <TodoApp items={['Different...']} />,
+  |    document.getElementById('example2')
+  |  );
+  |  var id = $("#example2 div:first").attr('data-reactid');
+  |  $(".different span.after").text(id);
   |}, 1000)
   |</script>
 
-  h1= title
-  p Welcome
-  div#example !{component}
+  script.
+    $(document).ready(function() {
+      var id = $("#example div:first").attr('data-reactid');
+      $(".same span.before").text(id);
+
+      var id = $("#example2 div:first").attr('data-reactid');
+      $(".different span.before").text(id);
+    })
+
+  h1 Welcome To Node, Express, React Example
+  div.same
+    h2 Same Data
+    p ID before rendering client side component
+      span.before
+
+    p ID after rendering client side component
+      span.after
+    div#example !{component_same}
+
+  div.different
+    h2 Different Data
+    p ID before rendering client side component
+      span.before
+
+    p ID after rendering client side component
+      span.after
+
+  div#example2 !{component_different}
