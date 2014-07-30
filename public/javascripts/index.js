@@ -1,37 +1,31 @@
-/**
- * @jsx React.DOM
- */
-var TodoList = React.createClass({
-  render: function() {
-    var createItem = function(itemText) {
-      return <li>{itemText}</li>;
-    };
-    return <ul>{this.props.items.map(createItem)}</ul>;
+/** @jsx React.DOM */
+var React = require('react');
+var TodoApp = require('./../../components/index.js');
+
+var App = function() {
+  this.start = function(props) {
+   setTimeout(function() { 
+//Causes different checksums
+//    var data = props.items + ",Test 3";
+
+      var data = props.items;
+
+      //Split must be done within the {} otherwise it's just a string
+      React.renderComponent(
+        <TodoApp items={props.items.split(',')} />,
+        document.getElementById('example')
+      );
+      var id = $("#example div:first").attr('data-react-checksum');
+      $(".same span.after").text(id);
+
+      React.renderComponent(
+        <TodoApp items={['Different...']} />,
+        document.getElementById('example2')
+      );
+      var id = $("#example2 div:first").attr('data-react-checksum');
+      $(".different span.after").text(id);
+    }, 1000)
   }
-});
-var TodoApp = React.createClass({
-  getInitialState: function() {
-    return this.props;
-  },
-  onChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var nextItems = this.state.items.concat([this.state.text]);
-    var nextText = '';
-    this.setState({items: nextItems, text: nextText});
-  },
-  render: function() {
-    return (
-      <div>
-        <h3>TODO</h3>
-        <TodoList items={this.state.items} />
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.text} />
-          <button>{'Add #' + (this.state.items.length + 1)}</button>
-        </form>
-      </div>
-    );
-  }
-});
+} 
+
+window.App = App;

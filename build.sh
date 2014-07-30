@@ -1,0 +1,1 @@
+browserify -e components/index.js -e public/javascripts/index.js -t reactify -t uglifyify -o public/javascripts/bundle.js

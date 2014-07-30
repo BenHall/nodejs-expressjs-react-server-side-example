@@ -10,5 +10,10 @@
     "jade": "*",
     "react": "^0.10.0",
     "node-jsx": "^0.10.0"
+  },
+  "devDependencies": {
+    "uglifyify": "^2.5.0",
+    "browserify": "^5.9.1",
+    "reactify": "^0.14.0"
   }
 }

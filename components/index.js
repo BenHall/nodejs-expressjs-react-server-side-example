@@ -11,6 +11,7 @@ var TodoList = React.createClass({
 });
 var TodoApp = React.createClass({
   getInitialState: function() {
+    console.log(this.props)
     return this.props;
   },
   onChange: function(e) {
