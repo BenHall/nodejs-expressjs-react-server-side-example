@@ -11,8 +11,7 @@ var TodoList = React.createClass({
 });
 var TodoApp = React.createClass({
   getInitialState: function() {
-    console.log(this.props)
-    return this.props;
+    return {items: this.props.items.split(',')};
   },
   onChange: function(e) {
     this.setState({text: e.target.value});
